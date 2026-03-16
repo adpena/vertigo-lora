@@ -75,7 +75,7 @@ All examples include reasoning traces (`<think>` blocks) and are scored on a 1-5
 
 ### Proprietary data used for training (not included)
 
-The production adapter (v0.5) was additionally trained on proprietary source code from **[Vertigo](https://vertigo.build)** — a platform for modern Roblox development tooling, AI-assisted game building, and persistent AI embodiment within Roblox experiences. Vertigo provides developer infrastructure including a sub-millisecond sync engine (Vertigo Sync), a DSL compiler for agent-driven world building (Suit SDK), MCP-instrumented Studio tooling, an SDK and harness for persistent AI agents embodied as characters in live Roblox worlds, autonomous multi-agent workflows, and a portable agent identity system (OAC). The reference experience is a physics-driven vertical exploration game with chained traversal abilities, procedural world generation, and AI-driven NPCs — serving as both a showcase and a testbed for the tooling and embodiment stack.
+The production adapter (v0.5) was additionally trained on proprietary source code from **[Vertigo](https://vertigo.build)** — a platform for modern Roblox development tooling, AI-assisted game building, and persistent AI embodiment within Roblox experiences. Vertigo provides developer infrastructure including a sub-millisecond sync engine (Vertigo Sync), a DSL compiler for agent-driven world building (Suit SDK), MCP-instrumented Studio tooling, an SDK and harness for persistent AI agents embodied as characters in live Roblox worlds, autonomous multi-agent workflows, and a portable agent identity system (OAC). The reference experience is a physics-driven vertical exploration game with chained traversal abilities, procedural world generation, — serving as both a showcase and a testbed for the tooling and embodiment stack.
 
 The project spans multiple languages and systems:
 
@@ -86,8 +86,7 @@ The project spans multiple languages and systems:
   - **Vertigo Sync**: a sub-millisecond source sync engine replacing Rojo for real-time Studio development, with native FSEvents watching, incremental snapshot caching, mmap, Luau validation, and HTTP/SSE/WebSocket server
 - **Python (Fleet/Agent)** — a 5-machine local AI fleet with Obelisk inference proxy, Qwen Design Council (4-agent continuous deliberation), Discord relay, MCP server (99+ tools), and Toga/BeeWare cross-platform native UI (macOS, iOS/iPad)
 - **TypeScript (Site/WebMCP)** — an interactive Three.js showcase site with procedural crystal geometry, GPU particle systems, and zone-reactive atmospheric effects; plus WebMCP browser-native AI agent polyfill
-- **Elixir (Symphony)** — autonomous workflow orchestration with Linear integration, GitHub CI, and unattended multi-agent development cycles
-- **OAC (Open Agent Capsule)** — a portable agent identity and projection system that compiles capsules to 8 harness targets (Claude Code, Codex, Gemini, OpenCode, OpenClaw, MCP, WebMCP, Roblox Embodiment)
+- **[OAC (Open Agent Capsule)](https://github.com/adpena/oac)** — a portable agent identity and projection system that compiles capsules to 8 harness targets (Claude Code, Codex, Gemini, OpenCode, OpenClaw, MCP, WebMCP, Roblox Embodiment)
 
 This proprietary codebase data is not included in the public repository but contributed significantly to the model's understanding of production Roblox/Luau patterns:
 
