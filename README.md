@@ -1,17 +1,34 @@
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+[![HuggingFace](https://img.shields.io/badge/🤗_HuggingFace-Model-yellow)](https://huggingface.co/adpena/Vertigo-Qwen3.5-4B-v0.5-4bit)
+[![Results](https://img.shields.io/badge/Results-lora.vertigo.build-brightgreen)](https://lora.vertigo.build)
+[![Python](https://img.shields.io/badge/Python-3.11+-blue)](https://python.org)
+[![MLX](https://img.shields.io/badge/MLX-Apple_Silicon-black)](https://github.com/ml-explore/mlx)
+
 # Vertigo LoRA
 
 Domain-specialized LoRA fine-tuning pipeline for Roblox/Luau code generation on Apple Silicon.
 
+**[Live Results →](https://lora.vertigo.build)** | **[Models →](https://huggingface.co/adpena/Vertigo-Qwen3.5-4B-v0.5-4bit)** | **[Methodology →](data/eval/METHODOLOGY.md)**
+
 ## Key Results
 
-| Metric | Qwen3.5-4B Base | Vertigo-4B v0.5 (curated) | Delta |
+| Category | Qwen3.5-4B Base | Vertigo-4B v0.5 | Delta |
 |---|---|---|---|
-| Luau syntax correctness | 42% | 78% | +36pp |
-| Roblox API usage | 31% | 71% | +40pp |
-| Service pattern adherence | 18% | 65% | +47pp |
-| Type annotation coverage | 25% | 68% | +43pp |
+| Coding | 63.7% | 72.5% | +8.8pp |
+| Bugfix | 83.3% | 90.0% | +6.7pp |
+| Architecture | 67.5% | 76.6% | +9.1pp |
+| MCP | 97.5% | 85.8% | -11.7pp |
+| Embodiment | 75.0% | 100.0% | +25.0pp |
+| **Overall** | **75.1%** | **82.9%** | **+7.8pp** |
 
-OpenGameEval dry-run: **73% pass rate** on held-out Roblox tasks (caveat: small eval set of 30 tasks, not yet validated against the full OpenGameEval benchmark).
+OpenGameEval dry-run: **83.0% pass rate** on 47 held-out Roblox tasks (pattern-match scoring, not execution-verified — see [methodology](data/eval/METHODOLOGY.md) for caveats).
+
+## Prerequisites
+
+- **Apple Silicon Mac** — M1+ for inference, M4/M5 with 36GB+ unified memory for training
+- **Python 3.11+**
+- **[uv](https://github.com/astral-sh/uv) package manager**
+- **~10GB disk space** for models + training data
 
 ## Quick Start
 
@@ -100,6 +117,14 @@ The automated pipeline runs 7 steps end-to-end:
 - **Inference:** Any Apple Silicon Mac (8GB+ for 4B model)
 - **Recommended:** 128GB for 9B training and full-rank 4B
 
+## Contributing
+
+Contributions welcome — please open an issue first to discuss. Areas of interest:
+- Additional rights-clean Roblox/Luau training data
+- Benchmark task contributions
+- Evaluation methodology improvements
+- Bug reports and fixes
+
 ## Citation
 
 ```bibtex
@@ -114,6 +139,15 @@ The automated pipeline runs 7 steps end-to-end:
 ## License
 
 Apache 2.0 (same as base Qwen3.5 model)
+
+## Acknowledgments
+
+- [Apple MLX](https://github.com/ml-explore/mlx) and [mlx-lm](https://github.com/ml-explore/mlx-lm) for making on-device fine-tuning practical
+- [Qwen](https://huggingface.co/Qwen) team for the excellent Qwen3.5 base models (Apache 2.0)
+- [Roblox OpenGameEval](https://github.com/Roblox/open-game-eval) for the evaluation benchmark and leaderboard
+- [Roblox Creator Documentation](https://create.roblox.com/docs) (CC-BY-4.0) for high-quality training data
+- The open-source Roblox community for publicly available code and tools
+- [Claude](https://anthropic.com) (Anthropic) for development assistance
 
 ## Contact
 

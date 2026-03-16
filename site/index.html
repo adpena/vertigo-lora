@@ -4,6 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Vertigo LoRA — Roblox/Luau Specialized Models</title>
+<meta property="og:title" content="Vertigo LoRA — Roblox/Luau Specialized Models">
+<meta property="og:description" content="Domain-specialized LoRA fine-tuning for Roblox/Luau code generation. 82.9% on domain benchmark (+7.8pp over base).">
+<meta property="og:url" content="https://lora.vertigo.build">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vertigo LoRA">
+<meta name="twitter:description" content="Domain-specialized LoRA for Roblox/Luau on Apple Silicon. 82.9% benchmark, 83.0% OpenGameEval.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏔️</text></svg>">
 <style>
 :root {
   --bg: #0d1117;
@@ -81,6 +89,7 @@ li { margin-bottom: 0.3rem; }
     <tr><td class="muted">Training data</td><td>3,301 curated examples &mdash; last expanded March 16, 2026</td></tr>
     <tr><td class="muted">OpenGameEval run</td><td>47 tasks dry-run &mdash; March 16, 2026</td></tr>
     <tr><td class="muted">Base model</td><td><a href="https://huggingface.co/mlx-community/Qwen3.5-4B-4bit">Qwen3.5-4B-4bit</a> (Apache 2.0)</td></tr>
+    <tr><td class="muted">Repository</td><td><a href="https://github.com/adpena/vertigo-lora">github.com/adpena/vertigo-lora</a></td></tr>
     <tr><td class="muted">Next milestone</td><td>128GB machine (March 19) &mdash; 9B training, full-rank 4B, Studio execution eval</td></tr>
   </table>
 </div>
@@ -340,7 +349,7 @@ li { margin-bottom: 0.3rem; }
     Evaluation inspired by <a href="https://github.com/Roblox/open-game-eval">Roblox OpenGameEval</a>.
     Built with assistance from Claude (Anthropic).
   </p>
-  <p>&copy; 2026 Alejandro Peña. Model weights licensed under Apache 2.0.</p>
+  <p>&copy; 2026 Alejandro Peña. Licensed under <a href="https://www.apache.org/licenses/LICENSE-2.0">Apache 2.0</a>. Model weights licensed under Apache 2.0.</p>
 </footer>
 
 </body>
