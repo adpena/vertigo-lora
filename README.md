@@ -73,7 +73,7 @@ This proprietary data comprised ~631 examples (19% of the curated training set).
 
 See [`data/eval/METHODOLOGY.md`](data/eval/METHODOLOGY.md) for the full evaluation methodology, benchmark descriptions, and known caveats.
 
-Live results are published at [vertigo-lora.pages.dev](https://vertigo-lora.pages.dev).
+Live results are published at [lora.vertigo.build](https://lora.vertigo.build).
 
 ## Pipeline
 
