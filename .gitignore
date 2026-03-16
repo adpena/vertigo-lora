@@ -62,3 +62,4 @@ data/raw/oss_roblox.jsonl
 # Secrets / env
 .env
 .env.local
+.wrangler/

@@ -107,7 +107,7 @@ LM Studio + mlx_lm.server + training/generation scripts competing for the same 3
 
 *Caveat: dry-run scores measure code generation quality via pattern matching, not Studio execution verification. Not directly comparable to published pass@1.*
 
-## Hardware Constraints (isaac — 36GB M5 Max)
+## Hardware Constraints (36GB M5 Max)
 
 | Model | Rank | Layers | Seq | Peak Mem | Result |
 |---|---|---|---|---|---|
@@ -143,4 +143,4 @@ The 4B on 36GB is constrained to rank 8, 8 layers, 2048 seq. This leaves capacit
 ## Run History
 | Date | Adapter | Model | Config | Val Loss | Coding | Bugfix | Arch | MCP | Embodiment | Overall | Promoted | Notes |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 2026-03-16 10:26 | v0.5-4b-curated | Qwen3.5-4B-4bit | 4b | — | 72.5% | 90.0% | 76.6% | 85.8% | 100.0% | **82.9%** | yes (production) | Alejandros-MacBook-Pro-2 |
+| 2026-03-16 10:26 | v0.5-4b-curated | Qwen3.5-4B-4bit | 4b | — | 72.5% | 90.0% | 76.6% | 85.8% | 100.0% | **82.9%** | yes (production) | local |
