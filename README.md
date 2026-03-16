@@ -75,16 +75,32 @@ All examples include reasoning traces (`<think>` blocks) and are scored on a 1-5
 
 ### Proprietary data used for training (not included)
 
-The production adapter (v0.5) was additionally trained on proprietary source code from the Vertigo project — a Roblox game built with 117K lines of Luau. This data is not included in the public repository but contributed significantly to the model's understanding of:
+The production adapter (v0.5) was additionally trained on proprietary source code from **[Vertigo](https://vertigo.build)** — a platform for modern Roblox development tooling, AI-assisted game building, and persistent AI embodiment within Roblox experiences. Vertigo provides developer infrastructure including a sub-millisecond sync engine (Vertigo Sync), a DSL compiler for agent-driven world building (Suit SDK), MCP-instrumented Studio tooling, an SDK and harness for persistent AI agents embodied as characters in live Roblox worlds, autonomous multi-agent workflows, and a portable agent identity system (OAC). The reference experience is a physics-driven vertical exploration game with chained traversal abilities, procedural world generation, and AI-driven NPCs — serving as both a showcase and a testbed for the tooling and embodiment stack.
 
-- **Service/controller architecture** (37 services, 135 controllers) — Init/Start two-phase boot pattern, dependency ordering, service-controller separation
-- **Zone builders** (56 procedural world builders) — CollectionService tagging, Instance.new patterns, geometry generation with @native optimization
-- **Physics systems** — Spring solvers, Baumgarte stabilization, vehicle controllers with fixed-step PreSimulation loops
-- **Config modules** — Named exports pattern, table.freeze, export type definitions, tuning value organization
-- **Networking patterns** — Server-authoritative RemoteEvent validation, client-server split, replication safety
-- **Ability system** — Grapple/glide/airdash/slide ability controllers, cooldown management, input handling
+The project spans multiple languages and systems:
 
-This proprietary data comprised ~631 examples (19% of the curated training set). The model can be retrained without it using only the included rights-clean data, though performance may differ from the published benchmarks.
+- **117K lines of `--!strict` Luau** — the game runtime: services, controllers, zone builders, physics, abilities, networking, UI
+- **Rust (Strata / Suit SDK / Vertigo Sync)** — the core innovations of the platform:
+  - **Strata**: the foundational framework providing the Suit SDK runtime, compilation pipeline, and cross-language codegen
+  - **Suit SDK & DSL**: a domain-specific language and compiler that transpiles high-level agent instructions (natural language, expression trees, Logo turtle geometry) to optimized Luau — enabling AI agents to build and modify game worlds through a compiled, type-safe interface rather than raw code generation. Includes a Rust-to-Python codegen bridge with 412 differential tests
+  - **Vertigo Sync**: a sub-millisecond source sync engine replacing Rojo for real-time Studio development, with native FSEvents watching, incremental snapshot caching, mmap, Luau validation, and HTTP/SSE/WebSocket server
+- **Python (Fleet/Agent)** — a 5-machine local AI fleet with Obelisk inference proxy, Qwen Design Council (4-agent continuous deliberation), Discord relay, MCP server (99+ tools), and Toga/BeeWare cross-platform native UI (macOS, iOS/iPad)
+- **TypeScript (Site/WebMCP)** — an interactive Three.js showcase site with procedural crystal geometry, GPU particle systems, and zone-reactive atmospheric effects; plus WebMCP browser-native AI agent polyfill
+- **Elixir (Symphony)** — autonomous workflow orchestration with Linear integration, GitHub CI, and unattended multi-agent development cycles
+- **OAC (Open Agent Capsule)** — a portable agent identity and projection system that compiles capsules to 8 harness targets (Claude Code, Codex, Gemini, OpenCode, OpenClaw, MCP, WebMCP, Roblox Embodiment)
+
+This proprietary codebase data is not included in the public repository but contributed significantly to the model's understanding of production Roblox/Luau patterns:
+
+- **Service/controller architecture** (37 services, 135 controllers) — Init/Start two-phase boot pattern with explicit dependency ordering, service-controller separation for server/client responsibility, and module-level `@native` optimization on hot paths
+- **Zone builders** (56 procedural world builders) — CollectionService tagging for runtime discovery, procedural geometry generation with `Instance.new` pooling, crystal/terrain/vegetation placement, and per-zone atmospheric configuration
+- **Physics systems** — Critically-damped spring solvers for camera and movement interpolation, Baumgarte-stabilized constraints, vehicle controllers (dirt bike, glider) with fixed-step PreSimulation physics loops using `vector.*` SIMD operations
+- **Config modules** — Named exports pattern (`return { GrappleTuning, GlideTuning, ... }`), `table.freeze` for immutable configs, `export type` definitions for type-safe consumption, and runtime attribute-based hot-reload
+- **Networking patterns** — Server-authoritative RemoteEvent validation (cooldown checks, range validation, line-of-sight, player state), structured client-server request/response flow (`RequestUseAbility` → validate → `FireClient`), and replication-safe state synchronization
+- **Ability system** — Full traversal ability stack (grapple hook with spring-based travel and momentum preservation, air dash with burst acceleration, glide with planar velocity steering, wall run with surface detection, slide with terrain-following), cooldown management, input buffering, and graceful state transitions
+- **Embodied agent runtime** — Edit Mode Runtime engine that animates AI agents at 60Hz in Studio, WebSocket-based RuntimeBridge for multi-agent coordination, patrol systems with waypoint navigation, and agent-to-agent encounter behaviors
+- **MCP instrumentation** — 12+ Studio MCP tools for programmatic game development (run_code, get_console_output, run_script_in_play_mode), Fleet DSL wrappers for structured queries (world stats, zone health, physics audit), and automated traversal smoke testing
+
+This proprietary data comprised ~631 examples (19% of the curated training set). The model can be retrained without it using only the included rights-clean data, though performance may differ from the published benchmarks — the proprietary data provides the densest signal for Vertigo-specific conventions that general Roblox documentation does not cover.
 
 ## Evaluation
 
