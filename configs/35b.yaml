@@ -1,0 +1,56 @@
+# Vertigo LoRA — 35B-A3B Full Config (128GB M-series)
+# Unlocked by 128GB unified memory — maximum quality training
+# Base: Qwen3.5-35B-A3B MoE (4-bit MLX) — 3B active params per token
+
+model: "mlx-community/Qwen3.5-35B-A3B-4bit"
+train: true
+data: "data/processed"
+fine_tune_type: lora
+mask_prompt: true
+
+# LoRA adapter parameters
+# Rank 64 — 128GB allows the higher expressiveness (upgrade from 32)
+# Scale 40.0 — scaled with rank (2x rank -> 2x scale)
+lora_parameters:
+  rank: 64
+  scale: 40.0
+  dropout: 0.05
+  keys:
+    - "self_attn.q_proj"
+    - "self_attn.k_proj"
+    - "self_attn.v_proj"
+    - "self_attn.o_proj"
+    - "mlp.gate_proj"
+    - "mlp.down_proj"
+    - "mlp.up_proj"
+
+# Apply LoRA to last 16 layers of the model
+num_layers: 16
+
+# Training hyperparameters
+# 128GB allows batch_size 2 (up from 1) and 8192 seq length (up from 4096)
+iters: 1000
+batch_size: 2
+gradient_accumulation: 4       # effective batch = 2 * 4 = 8
+max_seq_length: 8192           # double from 4096 — captures full file contexts
+grad_checkpoint: true          # still important even with 128GB
+
+# Learning rate schedule — cosine decay with warmup
+# Longer warmup (150) for the larger config
+learning_rate: 1.0e-5
+lr_schedule:
+  name: cosine_decay
+  warmup: 150
+  warmup_init: 1.0e-7
+  arguments: [1.0e-5, 1000, 1.0e-7]
+
+# Regularization
+weight_decay: 0.01
+grad_clip: 1.0
+
+# Evaluation and checkpointing
+steps_per_report: 10
+steps_per_eval: 50
+val_batches: 25
+save_every: 200
+early_stopping_patience: 8

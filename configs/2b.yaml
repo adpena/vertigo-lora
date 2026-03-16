@@ -1,0 +1,45 @@
+# Vertigo LoRA — 2B Adapter (Mobile / MacBook Neo / Community)
+# Smallest model — runs on any 8GB device
+# Base: Qwen3.5-2B dense (4-bit MLX)
+
+model: "mlx-community/Qwen3.5-2B-4bit"
+train: true
+data: "data/processed"
+fine_tune_type: lora
+mask_prompt: true
+
+lora_parameters:
+  rank: 16
+  scale: 10.0
+  dropout: 0.05
+  keys:
+    - "self_attn.q_proj"
+    - "self_attn.k_proj"
+    - "self_attn.v_proj"
+    - "self_attn.o_proj"
+    - "mlp.gate_proj"
+    - "mlp.down_proj"
+    - "mlp.up_proj"
+
+num_layers: 16
+iters: 400
+batch_size: 2
+gradient_accumulation: 4
+max_seq_length: 2048
+grad_checkpoint: true
+
+learning_rate: 5.0e-6
+lr_schedule:
+  name: cosine_decay
+  warmup: 50
+  warmup_init: 1.0e-8
+  arguments: [5.0e-6, 400, 1.0e-8]
+
+weight_decay: 0.01
+grad_clip: 1.0
+
+steps_per_report: 10
+steps_per_eval: 50
+val_batches: 25
+save_every: 100
+early_stopping_patience: 10

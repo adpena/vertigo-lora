@@ -1,0 +1,26 @@
+# Vertigo LoRA — 4B Config (balanced for 36GB)
+# Peak mem target: <30GB (11.8GB at rank4/seq1024, so rank8/seq2048 should be ~24GB)
+model: "mlx-community/Qwen3.5-4B-4bit"
+train: true
+data: "data/processed"
+fine_tune_type: lora
+mask_prompt: true
+
+lora_parameters:
+  rank: 8
+  scale: 20.0
+  dropout: 0.0
+
+num_layers: 8
+iters: 600
+batch_size: 1
+gradient_accumulation: 1
+max_seq_length: 2048
+grad_checkpoint: true
+
+learning_rate: 2.0e-6
+
+steps_per_report: 20
+steps_per_eval: 200
+val_batches: 25
+save_every: 200

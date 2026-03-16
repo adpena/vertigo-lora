@@ -1,0 +1,51 @@
+[project]
+name = "vertigo-lora"
+version = "0.1.0"
+description = "LoRA fine-tuning pipeline for Vertigo's Roblox coding model"
+requires-python = ">=3.11"
+
+dependencies = [
+    # Core MLX training
+    "mlx-lm>=0.22.0",
+
+    # Data validation
+    "pydantic>=2.10",
+
+    # Synthetic data generation
+    "distilabel>=1.5",
+
+    # Dataset utilities
+    "datasets>=3.0",
+
+    # Deduplication
+    "datasketch>=1.6",         # MinHash
+
+    # Quality scoring
+    "numpy>=2.0",
+
+    # Experiment tracking
+    "wandb>=0.19",
+]
+
+[project.optional-dependencies]
+dspy = ["dspy>=2.6"]
+full = ["vertigo-lora[dspy]"]
+dev = ["pytest>=8.0", "pytest-xdist>=3.0", "hypothesis>=6.0", "ruff>=0.15"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["F", "E"]
+ignore = ["E402", "E501", "E731"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["scripts"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"

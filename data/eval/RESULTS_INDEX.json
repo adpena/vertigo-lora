@@ -1,0 +1,25 @@
+{
+    "benchmark_version": "v2_real_mcp_tools",
+    "last_updated": "2026-03-16",
+    "base_scores": {
+        "4b_base": {"overall": 75.1, "coding": 63.7, "bugfix": 83.3, "architecture": 67.5, "mcp_tool_calling": 97.5, "embodiment": 75.0, "date": "2026-03-16", "benchmark": "v2"},
+        "2b_base": {"overall": 65.1, "coding": 45.0, "bugfix": 81.7, "architecture": 54.2, "mcp_tool_calling": 70.0, "embodiment": 95.0, "date": "2026-03-15", "benchmark": "v1"},
+        "9b_base": {"overall": 63.5, "coding": 25.6, "bugfix": 76.7, "architecture": 61.6, "mcp_tool_calling": 96.7, "embodiment": 95.0, "date": "2026-03-15", "benchmark": "v1"},
+        "27b_base": {"overall": 88.7, "coding": 80.6, "bugfix": 96.7, "architecture": 79.1, "mcp_tool_calling": 100.0, "embodiment": 95.0, "date": "2026-03-15", "benchmark": "v1"},
+        "35b_a3b_base": {"overall": 79.1, "coding": 79.2, "bugfix": 75.3, "architecture": 66.5, "mcp_tool_calling": 96.7, "embodiment": 77.5, "date": "2026-03-15", "benchmark": "v1"}
+    },
+    "adapters": {
+        "v0.5-4b-curated": {"overall": 82.9, "coding": 72.5, "bugfix": 90.0, "architecture": 76.6, "mcp_tool_calling": 85.8, "embodiment": 100.0, "date": "2026-03-15", "benchmark": "v2", "status": "production"},
+        "v0.4-4b-curated": {"overall": 82.8, "coding": 70.6, "bugfix": 85.0, "architecture": 75.0, "mcp_tool_calling": 51.7, "embodiment": 90.0, "date": "2026-03-15", "benchmark": "v2", "status": "archived"},
+        "v0.6-4b-curated": {"overall": 81.9, "coding": 78.8, "bugfix": 85.0, "architecture": 77.5, "mcp_tool_calling": 76.7, "embodiment": 95.0, "date": "2026-03-15", "benchmark": "v2", "status": "archived"}
+    },
+    "stale_runs_removed": [
+        "results_20260314_133515.jsonl (pre-fix benchmark, 27.2%)",
+        "results_27b_base.jsonl (LM Studio contention, 28.1%)",
+        "results_27b_base_20260314_140505.jsonl (contention, 29.7%)",
+        "results_35b_base.jsonl (contention, 28.1%)",
+        "results_35b_base_20260314_140415.jsonl (contention, 28.1%)",
+        "results_9b_base.jsonl (contention, 28.1%)",
+        "results_9b_base_20260314_135805.jsonl (contention, 28.1%)"
+    ]
+}

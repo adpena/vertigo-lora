@@ -1,0 +1,58 @@
+# Vertigo LoRA — 9B Config (128GB Apple Silicon / abraham)
+# Target hardware: 128GB Apple Silicon (arriving March 19)
+# Estimated peak memory: ~60-75GB (4-bit model ~9.5GB + rank16 adapters + batch1 + seq4096)
+# Differences from 36GB 4B config (4b.yaml):
+#   - model: 4B → 9B (next capacity tier, primary training target for abraham)
+#   - rank: 8 → 16 (2x adapter capacity, conservative for larger model)
+#   - dropout: 0.0 → 0.05 (regularization)
+#   - LoRA keys: default → all attention + MLP projections
+#   - num_layers: 8 → 16 (all transformer layers)
+#   - batch_size: 1 (kept at 1 due to larger model)
+#   - gradient_accumulation: 1 → 8 (effective batch = 8)
+#   - max_seq_length: 2048 → 4096 (full context)
+#   - learning_rate: 2.0e-6 (same base, but with cosine decay schedule)
+#   - More frequent eval (steps_per_eval: 200 → 50)
+#   - More frequent saves (save_every: 200 → 100)
+
+# 9B on 128GB — primary training target for abraham
+model: "mlx-community/Qwen3.5-9B-4bit"
+train: true
+data: "data/processed"
+fine_tune_type: lora
+mask_prompt: true
+
+lora_parameters:
+  rank: 16
+  scale: 20.0
+  dropout: 0.05
+  keys:
+    - "self_attn.q_proj"
+    - "self_attn.k_proj"
+    - "self_attn.v_proj"
+    - "self_attn.o_proj"
+    - "mlp.gate_proj"
+    - "mlp.down_proj"
+    - "mlp.up_proj"
+
+num_layers: 16
+iters: 600
+batch_size: 1
+gradient_accumulation: 8
+max_seq_length: 4096
+grad_checkpoint: true
+
+learning_rate: 2.0e-6
+lr_schedule:
+  name: cosine_decay
+  warmup: 100
+  warmup_init: 1.0e-7
+  arguments: [2.0e-6, 600, 1.0e-7]
+
+weight_decay: 0.01
+grad_clip: 1.0
+
+steps_per_report: 10
+steps_per_eval: 50
+val_batches: 25
+save_every: 100
+early_stopping_patience: 5

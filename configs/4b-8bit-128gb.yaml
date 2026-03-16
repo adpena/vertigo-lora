@@ -1,0 +1,62 @@
+# Vertigo LoRA — 4B 8-bit Config (128GB Apple Silicon / abraham)
+# Target hardware: 128GB Apple Silicon (arriving March 19)
+# Estimated peak memory: ~45-55GB (8-bit model ~8.5GB + rank32 adapters + batch2 + seq4096)
+# Differences from 36GB 4B config (4b.yaml):
+#   - model: 4-bit → 8-bit quantization (better gradients, higher quality training)
+#   - 8-bit model is ~8.5GB vs 4.6GB for 4-bit, still fits easily in 128GB
+#   - rank: 8 → 32 (4x adapter capacity)
+#   - dropout: 0.0 → 0.05 (regularization for larger capacity)
+#   - LoRA keys: default → all attention + MLP projections
+#   - num_layers: 8 → 16 (all transformer layers)
+#   - iters: 600 → 800 (more iterations for larger capacity)
+#   - batch_size: 1 → 2 (can batch with 128GB headroom)
+#   - gradient_accumulation: 1 → 4 (effective batch = 8)
+#   - max_seq_length: 2048 → 4096 (full context)
+#   - Added lr_schedule (cosine decay with warmup)
+#   - Added weight_decay + grad_clip regularization
+#   - More frequent eval (steps_per_eval: 200 → 100)
+# Same parameters as 4b-128gb.yaml but with 8-bit model for highest quality training.
+
+# 4B 8-bit on 128GB — highest quality training
+# 8-bit quantization gives better gradients than 4-bit
+model: "mlx-community/Qwen3.5-4B-MLX-8bit"
+train: true
+data: "data/processed"
+fine_tune_type: lora
+mask_prompt: true
+
+lora_parameters:
+  rank: 32          # 4x current rank (was 8)
+  scale: 20.0
+  dropout: 0.05
+  keys:             # All attention + MLP
+    - "self_attn.q_proj"
+    - "self_attn.k_proj"
+    - "self_attn.v_proj"
+    - "self_attn.o_proj"
+    - "mlp.gate_proj"
+    - "mlp.down_proj"
+    - "mlp.up_proj"
+
+num_layers: 16      # All layers (was 8)
+iters: 800          # More iterations for larger capacity
+batch_size: 2       # Can batch now
+gradient_accumulation: 4  # effective batch = 8
+max_seq_length: 4096  # Full context (was 2048)
+grad_checkpoint: true
+
+learning_rate: 3.0e-6
+lr_schedule:
+  name: cosine_decay
+  warmup: 100
+  warmup_init: 1.0e-7
+  arguments: [3.0e-6, 800, 1.0e-7]
+
+weight_decay: 0.01
+grad_clip: 1.0
+
+steps_per_report: 10
+steps_per_eval: 100
+val_batches: 25
+save_every: 200
+early_stopping_patience: 5

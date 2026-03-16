@@ -1,0 +1,48 @@
+# Curation config — controls which raw data enters the curated training set
+# Used by: scripts/curate_dataset.py
+# Best result: v0.5-4b-curated (82.9%)
+
+tiers:
+  # Tier 1: Copy unchanged (high code density, proven quality)
+  copy:
+    - "codebase*.jsonl"
+    - "oss_roblox.jsonl"
+    - "api_docs.jsonl"
+    - "devforum_qa.jsonl"
+    - "evolved.jsonl"
+    - "synthetic.jsonl"
+    - "bugfix_pairs.jsonl"
+    - "composition_tasks.jsonl"
+
+  # Tier 2: Verified/curated additions
+  verified:
+    - "star_verified*.jsonl"
+    - "teacher_distillation.jsonl"
+    - "luau_tests.jsonl"
+    - "rojo_architecture.jsonl"
+    - "selene_lint.jsonl"
+    - "roblox_ts_patterns.jsonl"
+
+  # Tier 3: Filter by code density
+  filter_code:
+    files:
+      - "roblox_creator_docs.jsonl"
+      - "critic_repair.jsonl"
+    min_code_lines: 5  # minimum lines of code in code blocks
+
+  # Tier 4: Filter by score
+  filter_score:
+    files:
+      - "rejection_sampled.jsonl"
+    min_score: 0.6
+    score_field: "eval_score"
+
+# Explicitly excluded (low code density, dilutes signal)
+excluded:
+  - "gameplay_sessions.jsonl"
+  - "opengameeval_tasks.jsonl"
+  - "tool_calling_sft.jsonl"
+  - "mcp_tools.jsonl"
+  - "studio_trajectories.jsonl"
+  - "embodiment_gameplay.jsonl"
+  - "magpie_synthetic.jsonl"

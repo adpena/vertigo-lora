@@ -1,0 +1,64 @@
+# Trained adapters (large binary files — keep in LFS or exclude)
+adapters/*/
+!adapters/.gitkeep
+!adapters/.archive/
+
+# Processed data (regenerated from raw via pipeline)
+data/processed/
+
+# Cloned source repos (re-cloned via extract scripts)
+data/sources/creator-docs/
+data/sources/luau/
+data/sources/rojo/
+data/sources/wally/
+data/sources/selene/
+data/sources/roblox-ts/
+data/sources/open-game-eval/
+!data/sources/MANIFEST.md
+
+# Eval results (generated per-run, not committed)
+data/eval/results*.jsonl
+data/eval/base_*.jsonl
+data/eval/opengameeval_*.jsonl
+# RESULTS_INDEX.json is TRACKED (canonical index) — do not gitignore it
+
+# Curated dataset (rebuilt from raw via curation script)
+data/curated/
+
+# Temp configs (experiment-specific, not canonical)
+configs/v04_fix.yaml
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+*.egg-info/
+dist/
+build/
+
+# MLX artifacts
+*.npz
+*.safetensors
+*.gguf
+
+# Experiment tracking
+wandb/
+
+# Temporary files
+*.tmp
+*.bak
+*.swp
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Private training data (not included in public repo)
+data/raw/codebase*.jsonl
+data/raw/oss_roblox.jsonl
+
+# Secrets / env
+.env
+.env.local
